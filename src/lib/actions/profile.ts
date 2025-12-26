@@ -18,11 +18,13 @@ export async function createUserProfile(
     const supabase = await createClient();
     
     // Use the server client which has elevated permissions
-    const { error } = await supabase.from("profiles").insert({
-      id: userId,
-      username: username.trim(),
-      email: email,
-    });
+    const { error } = await (supabase
+      .from("profiles")
+      .insert({
+        id: userId,
+        username: username.trim(),
+        email: email,
+      } as any)) as any;
 
     if (error) {
       return { success: false, error: error.message };
